@@ -18,7 +18,7 @@ export default function SignUp() {
     e.preventDefault();
     try {
       setLoading(true);
-      console.log("api called");
+      //console.log("api called");
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: {
@@ -28,7 +28,7 @@ export default function SignUp() {
       });
 
       const data = await res.json();
-      console.log(data);
+      //console.log(data);
       if (data.success === false) {
         setError(data.message);
       } else {
