@@ -8,7 +8,7 @@ import Header from './components/Header'
 import PrivateRoute from './components/PrivateRoute'
 import CreateListing from './Pages/CreateListing'
 import UpdateListing from './Pages/UpdateListing'
-import Listing from './Pages/listing'
+import Listing from './Pages/Listing'
 import Search from './Pages/Search'
 
 export default function App() {
