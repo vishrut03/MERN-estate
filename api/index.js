@@ -14,6 +14,7 @@ const app = express();
 const corsOptions = {
   origin: [
     "https://mern-estate-frontend-3nheeyvve-vishrut-panyas-projects.vercel.app",
+    "https://mern-estate-frontend-three.vercel.app",
   ],
   optionsSuccessStatus: 200,
 };
