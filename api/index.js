@@ -9,10 +9,12 @@ import cookieParser from "cookie-parser";
 
 dotenv.config();
 
-const app = express(); // Move app initialization to the top
+const app = express();
 
 const corsOptions = {
-  origin: "https://mern-estate-frontend-three.vercel.app", // remove trailing slash
+  origin: [
+    "https://mern-estate-frontend-3nheeyvve-vishrut-panyas-projects.vercel.app",
+  ],
   optionsSuccessStatus: 200,
 };
 
