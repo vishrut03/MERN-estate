@@ -32,12 +32,13 @@ export default function CreateListing() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const host = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchListing = async () => {
       try {
         const listingId = params.listingId;
-        const res = await fetch(`/api/listing/get/${listingId}`);
+        const res = await fetch(`${host}/api/listing/get/${listingId}`);
         console.log(res);
         const data = await res.json();
         if (data.success === false) {
@@ -153,16 +154,19 @@ export default function CreateListing() {
         return setError("Discount price must be lower than regular price");
       setLoading(true);
       setError(false);
-      const res = await fetch(`/api/listing/update/${params.listingId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          userRef: currentUser._id,
-        }),
-      });
+      const res = await fetch(
+        `${host}/api/listing/update/${params.listingId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...formData,
+            userRef: currentUser._id,
+          }),
+        }
+      );
       const data = await res.json();
       setLoading(false);
       if (data.success === false) {
