@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 
 const corsOptions = {
-  origin: "https://mern-estate-frontend-three.vercel.app/", // replace with your actual frontend domain
+  origin: "https://mern-estate-frontend-three.vercel.app", // replace with your actual frontend domain
   optionsSuccessStatus: 200,
 };
 
