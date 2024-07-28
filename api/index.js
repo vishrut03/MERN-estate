@@ -15,6 +15,7 @@ const corsOptions = {
   origin: [
     "https://mern-estate-frontend-3nheeyvve-vishrut-panyas-projects.vercel.app",
     "https://mern-estate-frontend-three.vercel.app",
+    "https://mern-estate-frontend-three.vercel.app/listing/65cfc432df1cabb1bf566eec",
   ],
   optionsSuccessStatus: 200,
 };
