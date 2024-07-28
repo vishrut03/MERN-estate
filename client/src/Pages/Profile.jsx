@@ -109,7 +109,9 @@ export default function Profile() {
 
   const handleShowListings = async () => {
     try {
+      console.log("button");
       setShowListingsError(false);
+      console.log("clicked");
       console.log("Auth token", cookies.access_token);
       const res = await fetch(`${host}/api/user/listings/${currentUser._id}`);
       const data = await res.json();
