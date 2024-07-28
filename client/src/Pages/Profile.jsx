@@ -11,15 +11,13 @@ import {
   updateUserStart,
   updateUserSuccess,
   updateUserFailure,
-  deleteUserFailure,
-  deleteUserStart,
-  deleteUserSuccess,
   signOutUserStart,
   signOutUserSuccess,
   signOutUserFailure,
 } from "../redux/User/userSlice";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 export default function Profile() {
   const fileRef = useRef(null);
@@ -33,6 +31,7 @@ export default function Profile() {
   const [userListings, setUserListings] = useState([]);
   const dispatch = useDispatch();
   const host = import.meta.env.VITE_BACKEND_URL;
+  const [cookies] = useCookies(["access_token"]);
 
   useEffect(() => {
     if (file) {
