@@ -28,8 +28,9 @@ export const signin = async (req, res, next) => {
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+        secure: process.env.NODE_ENV === "production", // ensure cookies are sent over HTTPS in production
+        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // cross-site cookies
+        maxAge: 1000 * 60 * 60 * 24 * 7, // cookie expiration (7 days)
       })
       .status(200)
       .json(rest);
@@ -49,6 +50,7 @@ export const google = async (req, res, next) => {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
           sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+          maxAge: 1000 * 60 * 60 * 24 * 7, // cookie expiration (7 days)
         })
         .status(200)
         .json(rest);
@@ -73,6 +75,7 @@ export const google = async (req, res, next) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+        maxAge: 1000 * 60 * 60 * 24 * 7, // cookie expiration (7 days)
       });
       res.status(200).json(rest);
     }

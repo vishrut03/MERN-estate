@@ -16,7 +16,7 @@ const corsOptions = {
     "https://mern-estate-frontend-three.vercel.app",
     "http://localhost:5173",
   ],
-  credentials: true,
+  credentials: true, // Allow credentials (cookies, headers, etc.)
   optionsSuccessStatus: 200,
 };
 
