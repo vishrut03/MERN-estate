@@ -110,7 +110,7 @@ export default function Profile() {
   const handleShowListings = async () => {
     try {
       setShowListingsError(false);
-      console.log(currentUser._id);
+      console.log(cookies.access_token);
       const res = await fetch(`${host}/api/user/listings/${currentUser._id}`);
       const data = await res.json();
       if (data.success === false) {
