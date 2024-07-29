@@ -7,6 +7,7 @@ import {
   signInFailure,
 } from "../redux/User/userSlice";
 import OAuth from "../components/OAuth";
+import Cookies from "js-cookie";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
@@ -31,15 +32,14 @@ export default function SignIn() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-        credentials: "include",
       });
       const data = await res.json();
-      console.log(data);
       if (data.success === false) {
         dispatch(signInFailure(data.message));
         return;
       }
-      dispatch(signInSuccess(data));
+      Cookies.set("access_token", data.token, { expires: 7 });
+      dispatch(signInSuccess(data.user));
       navigate("/profile");
     } catch (error) {
       dispatch(signInFailure(error.message));

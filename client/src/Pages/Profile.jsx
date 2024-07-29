@@ -18,6 +18,7 @@ import {
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 
 export default function Profile() {
   const fileRef = useRef(null);
@@ -31,7 +32,6 @@ export default function Profile() {
   const [userListings, setUserListings] = useState([]);
   const dispatch = useDispatch();
   const host = import.meta.env.VITE_BACKEND_URL;
-  const [cookies] = useCookies(["access_token"]);
 
   useEffect(() => {
     if (file) {
@@ -71,13 +71,18 @@ export default function Profile() {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
+
+      const token = Cookies.get("access_token");
+
       const res = await fetch(`${host}/api/user/update/${currentUser._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formData),
       });
+
       const data = await res.json();
       if (data.success === false) {
         dispatch(updateUserFailure(data.message));
@@ -111,8 +116,16 @@ export default function Profile() {
       console.log("button");
       setShowListingsError(false);
       console.log("clicked");
-      console.log("Auth token", cookies.access_token);
-      const res = await fetch(`${host}/api/user/listings/${currentUser._id}`);
+
+      const token = Cookies.get("access_token");
+      console.log("Auth token", token);
+
+      const res = await fetch(`${host}/api/user/listings/${currentUser._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       const data = await res.json();
       if (data.success === false) {
         setShowListingsError(true);
@@ -127,9 +140,15 @@ export default function Profile() {
 
   const handleListingDelete = async (listingId) => {
     try {
+      const token = Cookies.get("access_token");
+
       const res = await fetch(`${host}/api/listing/delete/${listingId}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+
       const data = await res.json();
       if (data.success === false) {
         console.log(data.message);

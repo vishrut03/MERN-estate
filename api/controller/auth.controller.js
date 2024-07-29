@@ -25,15 +25,7 @@ export const signin = async (req, res, next) => {
     if (!validPassword) return next(errorHandler(401, "Wrong credentials!"));
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
     const { password: pass, ...rest } = validUser._doc;
-    res
-      .cookie("access_token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // ensure cookies are sent over HTTPS in production
-        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // cross-site cookies
-        maxAge: 1000 * 60 * 60 * 24 * 7, // cookie expiration (7 days)
-      })
-      .status(200)
-      .json(rest);
+    res.status(200).json({ token, user: rest });
   } catch (error) {
     next(error);
   }
@@ -45,15 +37,7 @@ export const google = async (req, res, next) => {
     if (user) {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       const { password: pass, ...rest } = user._doc;
-      res
-        .cookie("access_token", token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-          maxAge: 1000 * 60 * 60 * 24 * 7, // cookie expiration (7 days)
-        })
-        .status(200)
-        .json(rest);
+      res.status(200).json({ token, user: rest });
     } else {
       const generatedPassword =
         Math.random().toString(36).slice(-8) +

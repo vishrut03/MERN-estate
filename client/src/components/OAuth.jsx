@@ -4,6 +4,7 @@ import { app } from "../firebase";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/User/userSlice";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export default function OAuth() {
   const dispatch = useDispatch();
@@ -26,11 +27,11 @@ export default function OAuth() {
           email: result.user.email,
           photo: result.user.photoURL,
         }),
-        credentials: "include",
       });
 
       const data = await res.json();
-      dispatch(signInSuccess(data));
+      Cookies.set("access_token", data.token, { expires: 7 });
+      dispatch(signInSuccess(data.user));
       navigate("/profile");
     } catch (error) {
       console.log("could not sign in with google", error);

@@ -8,6 +8,7 @@ import {
 import { app } from "../firebase";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);
@@ -132,23 +133,32 @@ export default function CreateListing() {
         return setError("You must upload at least one image");
       if (+formData.regularPrice < +formData.discountPrice)
         return setError("Discount price must be lower than regular price");
+
       setLoading(true);
       setError(false);
+
+      const token = Cookies.get("access_token");
+
       const res = await fetch(`${host}/api/listing/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           ...formData,
           userRef: currentUser._id,
         }),
       });
+
       const data = await res.json();
       setLoading(false);
+
       if (data.success === false) {
         setError(data.message);
+        return;
       }
+
       navigate(`/listing/${data._id}`);
     } catch (error) {
       setError(error.message);
