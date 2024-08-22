@@ -229,7 +229,7 @@ export default function Search() {
               <option value="bedrooms_desc">
                 Number of bedrooms high to low
               </option>
-              <option value="bedrooms_desc">
+              <option value="bedrooms_asc">
                 Number of bedrooms low to high
               </option>
             </select>
